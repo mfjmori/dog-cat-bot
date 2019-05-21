@@ -30,11 +30,27 @@ class LinebotController < ApplicationController
         # 送られてきたメッセージがtextだった場合
         when Line::Bot::Event::MessageType::Text
           # messageというハッシュを作る（この中に返信したい内容を入れる）
-          main_image_url, thumbnail_image_url = get_main_and_thumbnail_image(event.message['text'])
-          message = {
+          if judge_request_message(event.message['text'])
+            main_image_url, thumbnail_image_url = get_main_and_thumbnail_image(judge_request_message(event.message['text']))
+            message = {
             type: 'image',
             originalContentUrl: main_image_url,
             previewImageUrl: thumbnail_image_url
+            }
+            # メッセージを返す
+            client.reply_message(event['replyToken'], message)
+          else
+            message = {
+            type: 'text',
+            text: "メッセージは「犬」または「猫」にしてください。「柴犬」も指定できます"
+            }
+            # メッセージを返す
+            client.reply_message(event['replyToken'], message)
+          end
+        else
+          message = {
+          type: 'text',
+          text: "メッセージは「犬」または「猫」にしてください。「柴犬」も指定できます"
           }
           # メッセージを返す
           client.reply_message(event['replyToken'], message)
@@ -46,10 +62,7 @@ class LinebotController < ApplicationController
   end
 
   private
-  def get_main_and_thumbnail_image(request_message)
-    FlickRaw.api_key = ENV["FLICKR_API_KEY"]
-    FlickRaw.shared_secret = ENV["FLICKR_SECRET_KEY"]
-
+  def judge_request_message(request_message)
     dog = [
       '犬',
       'いぬ',
@@ -107,9 +120,13 @@ class LinebotController < ApplicationController
     elsif cat.include?(request_message)
       word = "cat"
     else
-      word = "animal"
+      word = false
     end
+  end
 
+  def get_main_and_thumbnail_image(word)
+    FlickRaw.api_key = ENV["FLICKR_API_KEY"]
+    FlickRaw.shared_secret = ENV["FLICKR_SECRET_KEY"]
     # クリエイティブ・コモンズ・ライセンス
     license = "1,2,3,4,5,6"
     # 画像の配列を最大50件取得
