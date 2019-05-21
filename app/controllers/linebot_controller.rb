@@ -35,7 +35,7 @@ class LinebotController < ApplicationController
             type: 'image',
             contentProvider: {
               type: 'external',
-              external: main_image_url,
+              originalContentUrl: main_image_url,
               previewImageUrl: thumbnail_image_url
             }
           }
