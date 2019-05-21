@@ -32,12 +32,8 @@ class LinebotController < ApplicationController
           # messageというハッシュを作る（この中に返信したい内容を入れる）
           # main_image_url, thumbnail_image_url = get_main_and_thumbnail_image(event.message['text'])
           message = {
-            type: 'image',
-            contentProvider: {
-              type: 'line',
-              originalContentUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_b.jpg",
-              previewImageUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_m.jpg"
-            }
+            type: 'text',
+            text: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_m.jpg"
           }
           # メッセージを返す
           client.reply_message(event['replyToken'], message)
