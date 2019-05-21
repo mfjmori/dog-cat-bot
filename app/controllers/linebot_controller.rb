@@ -123,7 +123,6 @@ class LinebotController < ApplicationController
     original_image_url = FlickRaw.url image
     main_image_url = original_image_url.gsub(/.jpg/, "_b.jpg")
     thumbnail_image_url = original_image_url.gsub(/.jpg/, "_m.jpg")
-
     return main_image_url, thumbnail_image_url
   end
 end
