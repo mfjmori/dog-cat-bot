@@ -30,13 +30,13 @@ class LinebotController < ApplicationController
         # 送られてきたメッセージがtextだった場合
         when Line::Bot::Event::MessageType::Text
           # messageというハッシュを作る（この中に返信したい内容を入れる）
-          main_image_url, thumbnail_image_url = get_main_and_thumbnail_image(event.message['text'])
+          # main_image_url, thumbnail_image_url = get_main_and_thumbnail_image(event.message['text'])
           message = {
             type: 'image',
             contentProvider: {
               type: 'external',
-              originalContentUrl: main_image_url,
-              previewImageUrl: thumbnail_image_url
+              originalContentUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_b.jpg",
+              previewImageUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_m.jpg"
             }
           }
           # メッセージを返す
