@@ -34,7 +34,7 @@ class LinebotController < ApplicationController
           message = {
             type: 'image',
             contentProvider: {
-              type: 'external',
+              type: 'line',
               originalContentUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_b.jpg",
               previewImageUrl: "https://farm7.staticflickr.com/6009/6001816539_4c728f2658_m.jpg"
             }
